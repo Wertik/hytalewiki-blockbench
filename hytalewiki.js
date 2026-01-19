@@ -52,6 +52,11 @@ const nodepath = require("node:path");
 
 const findFiles = (basepath, extensions, recursive = false) => {
     const results = [];
+
+    if (!fs.existsSync(basepath)) {
+        return results;
+    }
+
     const items = fs.readdirSync(basepath);
 
     for (const item of items) {
@@ -484,6 +489,6 @@ Plugin.register('hytalewiki', {
         buttons.forEach(b => MenuBar.addAction(b));
     },
     onunload() {
-        buttons.forEach(b => b.delete());
+        buttons.forEach(b => b && b.delete());
     }
 });
